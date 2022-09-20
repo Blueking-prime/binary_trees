@@ -8,25 +8,25 @@
  */
 int main(void)
 {
-    binary_tree_t *root;
-    size_t height;
+	binary_tree_t *root;
+	binary_tree_t *uncle;
 
-    root = binary_tree_node(NULL, 98);
-    root->left = binary_tree_node(root, 12);
-    root->right = binary_tree_node(root, 402);
-    binary_tree_insert_right(root->left, 54);
-    binary_tree_insert_right(root, 128);
-	binary_tree_insert_left(root->right, 54);
-    binary_tree_insert_right(root, 128);
-	binary_tree_insert_left(root->left, 54);
-    binary_tree_insert_right(root, 128);
-    binary_tree_print(root);
+	root = binary_tree_node(NULL, 98);
+	root->left = binary_tree_node(root, 12);
+	root->right = binary_tree_node(root, 128);
+	root->left->right = binary_tree_node(root->left, 54);
+	root->right->right = binary_tree_node(root->right, 402);
+	root->left->left = binary_tree_node(root->left, 10);
+	root->right->left = binary_tree_node(root->right, 110);
+	root->right->right->left = binary_tree_node(root->right->right, 200);
+	root->right->right->right = binary_tree_node(root->right->right, 512);
 
-    height = binary_tree_height(root);
-    printf("Height from %d: %lu\n", root->n, height);
-    height = binary_tree_height(root->right);
-    printf("Height from %d: %lu\n", root->right->n, height);
-    height = binary_tree_height(root->left->right);
-    printf("Height from %d: %lu\n", root->left->right->n, height);
-    return (0);
+	binary_tree_print(root);
+	uncle = binary_tree_uncle(root->right->left);
+	printf("Uncle of %d: %d\n", root->right->left->n, uncle->n);
+	uncle = binary_tree_uncle(root->left->right);
+	printf("Uncle of %d: %d\n", root->left->right->n, uncle->n);
+	uncle = binary_tree_uncle(root->left);
+	printf("Uncle of %d: %p\n", root->left->n, (void *)uncle);
+	return (0);
 }
